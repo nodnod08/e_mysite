@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 mysqlclient = {path = "./mysqlclient-1.4.6-cp39-cp39-win_amd64.whl"}
+django-jinja = "*"
+jinja2 = ">=2.10"
 
 [dev-packages]
 
