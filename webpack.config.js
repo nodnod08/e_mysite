@@ -42,20 +42,25 @@ module.exports = {
           esModule: false,
         },
       },
+      // {
+      //   test: /\.s?css$/,
+      //   use: [
+      //     "style-loader",
+      //     MiniCssExtractPlugin.loader,
+      //     "css-loader",
+      //     {
+      //       loader: "postcss-loader",
+      //       options: {
+      //         plugins: () => [autoprefixer()],
+      //       },
+      //     },
+      //     "sass-loader",
+      //   ],
+      // },
       {
-        test: /\.s?css$/,
-        use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              plugins: () => [autoprefixer()],
-            },
-          },
-          "sass-loader",
-        ],
+        test: /\.css$/,
+        exclude: "/node_modules",
+        use: [{ loader: "vue-style-loader" }, { loader: "css-loader" }],
       },
     ],
   },

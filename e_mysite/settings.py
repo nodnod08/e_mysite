@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_jinja',
-    'account'
+    'account',
+    'customer',
+    'product'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'account.middlewares.route.CustomAuthMiddleware'
 ]
 
 ROOT_URLCONF = 'e_mysite.urls'
@@ -139,7 +142,7 @@ USE_TZ = True
 
 STATIC_URL = "/public/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'public')
+    os.path.join(BASE_DIR, 'public'),
 ]
 
 # Default primary key field type
@@ -148,3 +151,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.MyUser'
+
+CSRF_COOKIE_NAME = 'XSRF-TOKEN'

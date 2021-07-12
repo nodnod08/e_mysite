@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.shortcuts import redirect
 
 class BaseMiddleware(object):
     def __init__(self, get_response):
@@ -7,7 +8,9 @@ class BaseMiddleware(object):
     def __call__(self, request):
         return self.get_response(request)
 
-class ProcessViewNoneMiddleware(BaseMiddleware):
+class CustomAuthMiddleware(BaseMiddleware):
     def process_view(self, request, view_func, view_args, view_kwargs):
-        print('----- Middleware view %s' % view_func.__name__)
+        if request.resolver_match.url_name == 'admin-index':
+            if not request.user.is_authenticated:
+                return redirect('/admin/login')
         return None
