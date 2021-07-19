@@ -3,7 +3,7 @@
       class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
     >
       <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"
-        >PRO PRINTS ENTERPRISE</a
+        >E MYSITE</a
       >
       <button
         class="navbar-toggler position-absolute d-md-none collapsed"
@@ -22,10 +22,10 @@
         placeholder="Search"
         aria-label="Search"
       />
-      <div class="dropdown">
+      <div class="d-sm-none d-none d-md-block d-lg-block dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {% if user %}
-          <span data-feather="user"></span> Account | Pogi
+        {% if request.user.is_authenticated  %}
+          <span data-feather="user"></span> Account | {{ request.user.first_name }}
         {% endif %}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

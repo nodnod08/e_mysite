@@ -1,0 +1,25 @@
+$theme-colors: (
+  "primary": #3c71c7,
+  "danger": #ff4136
+);
+
+$input-border-radius: 30rem !important;
+$custom-select-border-radius: 30rem !important;
+$btn-border-radius: 30rem !important;
+
+@import "./../../node_modules/bootstrap/scss/bootstrap";
+
+.custom-link {
+  transition: 0.2s;
+}
+
+.custom-link:hover {
+  background: #e3e3e3;
+}
+.active-path {
+  background: #e3e3e3;
+}
+
+.menu-title {
+  color: #7d7d7d;
+}
