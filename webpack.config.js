@@ -7,7 +7,9 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    main: ["./src/main.js", "./src/dashboard.js", "./src/scss/custom.scss", "./src/scss/dashboard.scss"]
+    main: ["./src/main.js"],
+    custom: ["./src/scss/custom.scss"],
+    dashboard: ["./src/dashboard.js", "./src/scss/dashboard.scss"]
   },
   watch: true,
   watchOptions: {
