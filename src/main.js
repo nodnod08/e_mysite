@@ -20,6 +20,6 @@ const app = new Vue({
     loginPage,
     dashboardPage,
     productPage,
-    productImportPage,
-  },
+    productImportPage
+  }
 });
