@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3206fc75cce0e3e69012ecd7c04e055e4679379c008d6a5f9b5c8052f6d7eb6c"
+            "sha256": "5dead14ea27d08129b6f88345d74388129df997c8e68a4a86d1ac0375b4fcc30"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,27 +18,27 @@
     "default": {
         "asgiref": {
             "hashes": [
-                "sha256:92906c611ce6c967347bbfea733f13d6313901d54dcca88195eaeb52b2a8e8ee",
-                "sha256:d1216dfbdfb63826470995d31caed36225dcaf34f182e0fa257a4dd9e86f1b78"
+                "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9",
+                "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==3.3.4"
+            "version": "==3.4.1"
         },
         "django": {
             "hashes": [
-                "sha256:66c9d8db8cc6fe938a28b7887c1596e42d522e27618562517cc8929eb7e7f296",
-                "sha256:ea735cbbbb3b2fba6d4da4784a0043d84c67c92f1fdf15ad6db69900e792c10f"
+                "sha256:3da05fea54fdec2315b54a563d5b59f3b4e2b1e69c3a5841dda35019c01855cd",
+                "sha256:c58b5f19c5ae0afe6d75cbdd7df561e6eb929339985dbbda2565e1cabb19a62e"
             ],
             "index": "pypi",
-            "version": "==3.2.4"
+            "version": "==3.2.5"
         },
         "django-jinja": {
             "hashes": [
-                "sha256:0d8e9d795ff698b97ef6c48f425042d57461a030d396dfb3b33080b7376f1fc9",
-                "sha256:bba30a7ea4394bccfaa9bc8620996c25ede446ab06104b51b3a16fe81232cbf2"
+                "sha256:49611b738bd82c2896e2d3f4662ce6b0bb6a9dac142b0c35cd29603238e05164",
+                "sha256:69433ea312264a541acf1e3e9748e44783ad33381e48e6a7230762e02f005276"
             ],
             "index": "pypi",
-            "version": "==2.8.0"
+            "version": "==2.9.0"
         },
         "jinja2": {
             "hashes": [
@@ -87,6 +87,13 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.0.1"
+        },
+        "mod-wsgi": {
+            "hashes": [
+                "sha256:7e0f49ec14eb923b366d93eb3f25de3c99881f2adf6aed4b3849d4c1fd16d7fb"
+            ],
+            "index": "pypi",
+            "version": "==4.8.0"
         },
         "mysqlclient": {
             "hashes": [

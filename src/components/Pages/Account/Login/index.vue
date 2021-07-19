@@ -8,30 +8,24 @@
               LOGIN
             </div>
             <div class="card-body">
+              <div v-if="showError" class="alert alert-danger" role="alert">
+                <h6 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> Incorrect Credentials</h6>
+                <p class="mb-0">
+                  Email or Password is incorrect, unable to login
+                </p>
+              </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input
-                  type="email"
-                  class="form-control form-control-sm"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  v-model="email"
-                />
-                <small id="emailHelp" class="form-text text-muted"
-                  >We'll never share your email with anyone else.</small
-                >
+                <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="email" />
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input
-                  type="password"
-                  class="form-control form-control-sm"
-                  id="exampleInputPassword1"
-                  v-model="password"
-                />
+                <input type="password" class="form-control form-control-sm" id="exampleInputPassword1" v-model="password" />
               </div>
-              <button @click="submitData" class="btn btn-primary btn-sm">
-                Submit
+              <button @click="submitData" class="btn btn-primary" type="button" :disabled="loading">
+                <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ loading ? "Loading" : "Login" }}
               </button>
             </div>
           </div>
@@ -47,18 +41,28 @@ export default {
     return {
       email: "",
       password: "",
+      loading: false,
+      showError: false
     };
   },
   methods: {
     async submitData() {
-      const result = await axios.post(`/admin/login/`, {
-        email: this.email,
-        password: this.password,
-      });
-
-      console.log(result);
-    },
-  },
+      this.loading = true;
+      await axios
+        .post(`/admin/login/`, {
+          email: this.email,
+          password: this.password
+        })
+        .then(res => {
+          if (res.data.success) {
+            window.location.replace("/admin/dashboard/");
+          } else {
+            this.showError = true;
+          }
+          this.loading = false;
+        });
+    }
+  }
 };
 </script>
 

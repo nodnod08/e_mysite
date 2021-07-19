@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django_jinja',
     'account',
     'customer',
-    'product'
+    'product',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/public/"
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'public'),
 ]
@@ -153,3 +155,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.MyUser'
 
 CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+
+ALLOWED_HOSTS=["emysite.local", "localhost", "127.0.0.1"]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.BaseBackend.UserBackend'
+]

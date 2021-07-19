@@ -1,0 +1,9 @@
+{% extends 'layout/layout.jinja' %}
+{% block content %}
+    <div class="container-fluid" id="app">
+      <div class="row">
+        {% include "layout/sidebar.jinja" %}
+        <product-page></product-page>
+      </div>
+    </div>
+{% endblock %}

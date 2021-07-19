@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.shortcuts import redirect
+from django.urls import reverse
 
 class BaseMiddleware(object):
     def __init__(self, get_response):
@@ -10,10 +11,14 @@ class BaseMiddleware(object):
 
 class CustomAuthMiddleware(BaseMiddleware):
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if request.resolver_match.url_name == 'admin-index':
-            print("*****************")
-            print(request.resolver_match.kwargs)
-            print("*****************")
+        if '/admin/' in request.path_info and request.resolver_match.url_name != 'admin-login':
             if not request.user.is_authenticated:
-                return redirect('/admin/login')
+                return redirect(reverse('account:admin-login'))
+        elif request.resolver_match.url_name == 'admin-login':
+            if request.user.is_authenticated:
+                if request.user.is_admin:
+                    print(reverse('dashboard:admin-dashboard'))
+                    return redirect(reverse('dashboard:admin-dashboard'))
+                else:
+                    return redirect(reverse('account:admin-login'))
         return None
