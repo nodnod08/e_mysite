@@ -7,7 +7,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    main: ["./src/main.js", "./src/scss/custom.scss"]
+    main: ["./src/main.js", "./src/dashboard.js", "./src/scss/custom.scss"]
   },
   watch: true,
   watchOptions: {
@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "public", "assets"),
-    filename: "js/main.min.js"
+    filename: "js/[name].min.js"
   },
   module: {
     rules: [
