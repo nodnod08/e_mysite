@@ -1,4 +1,6 @@
 import Vue from "vue/dist/vue.js";
+import JQuery from "jquery";
+window.$ = JQuery;
 
 window.axios = require("axios");
 

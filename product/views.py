@@ -1,7 +1,13 @@
+# modules
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.conf import settings
+from datetime import datetime
+# custom builds
 from product.models import ProductType, Products
-import json
+from product.file_uploads import checkIfExist, createDirectory, saveFileData, processXlsx, processCsv
+
+import json, os, uuid
 
 def index(request):
     return render(request, 'modules/product/index.jinja')
@@ -41,5 +47,28 @@ def saveManually(request):
     response = JsonResponse({
         "success": success,
         "message": message
+    })
+    return response
+
+def saveFile(request):
+    file = request.FILES.get("file")
+    filename = file.name.split(".")[0]
+    extension = file.name.split(".")[1]
+    now = datetime.now()
+    new_filename = filename + "_" + now.strftime("%d-%m-%Y") + "_" +str(uuid.uuid4())
+    group_folder = "csv" if extension == "csv" else "xlsx"
+    path = os.path.join(settings.BASE_DIR, 'public', 'storage', 'product_files', group_folder, new_filename)
+
+    isExist = checkIfExist(path)
+    if not isExist:
+        createDirectory(path)
+
+    if extension == 'xlsx':
+        processXlsx(file, path, filename)
+    else:
+        processCsv(file, path, filename)
+
+    response = JsonResponse({
+        "success": True,
     })
     return response

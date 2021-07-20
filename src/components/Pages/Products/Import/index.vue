@@ -21,7 +21,7 @@
               <ManualImport />
             </div>
             <div class="tab-pane fade" id="file" role="tabpanel" aria-labelledby="profile-tab">
-              ...
+              <FileUpload />
             </div>
           </div>
         </div>
@@ -32,10 +32,12 @@
 
 <script>
 import ManualImport from "./ManualImport.vue";
+import FileUpload from "./FileUpload.vue";
 
 export default {
   components: {
-    ManualImport
+    ManualImport,
+    FileUpload
   },
   data() {
     return {};

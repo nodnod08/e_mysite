@@ -10,4 +10,5 @@ urlpatterns = [
     # apis
     path('api/get-product-types/', views.getProductTypee),
     path('api/save-product-manually/', views.saveManually),
+    path('api/upload-file-product/', views.saveFile),
 ]
