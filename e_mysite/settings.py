@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9retjy2y+w4@dt6r2^go9i*11@bez8=c*e8^=-=soehu!^&=os'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -95,12 +97,12 @@ WSGI_APPLICATION = 'e_mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'e_mysite',
+        'NAME': config("DATABASE_NAME"),
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': '',
-        'PORT': '3306',
-        'HOST': 'localhost'
+        'USER': config("DATABASE_USER"),
+        'PASSWORD': config("DATABASE_PASSWORD"),
+        'PORT': config("DATABASE_PORT"),
+        'HOST': config("DATABASE_HOST")
     }
 }
 
@@ -147,7 +149,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'public')
 ]
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'storage')
 

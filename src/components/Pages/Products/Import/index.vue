@@ -41,11 +41,6 @@ export default {
   },
   data() {
     return {};
-  },
-  methods: {
-    goTo(url) {
-      window.location.href = url;
-    }
   }
 };
 </script>
