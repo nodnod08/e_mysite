@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.conf import settings
 from datetime import datetime
+from django.db.models import Q, Case, Value, When
 # custom builds
 from product.models import ProductType, Products
 from product.file_uploads import checkIfExist, createDirectory, createChunkCsv, createChunkXlsx, readContents
@@ -122,10 +123,38 @@ def saveToDatabase(path):
 
 
 def getItemsPaginate(request):
-    page = request.POST.get('page') or 1
-    limit = request.POST.get('limit') or 10
-    print(request.POST.get("page"))
-    products = Products.objects.all()
+    data = json.loads(request.body.decode('utf-8'))
+
+    page = data.get('page') or 1
+    limit = data.get('limit') or 10
+    filters = data.get('filters')
+
+    products = Products.objects
+
+    where_clause = []
+
+    if filters['name']:
+        where_clause.append("product_name LIKE '%%{0}%%'".format(filters['name']))
+    
+    if filters['item_type']:
+        where_clause.append("""
+            product_type_id IN (SELECT id FROM product_types where id = {0})
+        """.format(filters['item_type']))
+
+    if filters['min_price'] and filters['max_price']:
+        min_price = "{:.2f}".format(float(filters['min_price']))
+        max_price = "{:.2f}".format(float(filters['max_price']))
+
+        where_clause.append("""
+            product_price BETWEEN {0} AND {1}
+        """.format(min_price, max_price))
+
+    if len(where_clause):
+        where_clause = " WHERE " + (" OR ".join(where_clause))
+    else:
+        where_clause = ""
+    products = products.raw("SELECT * FROM products" + where_clause)
+
     serializer = ProductSerializer(products, many=True)
 
     paginator = MyPaginator(serializer.data, limit)
@@ -133,4 +162,25 @@ def getItemsPaginate(request):
 
     response = JsonResponse({"data": paginated})
 
+    return response
+
+def updateItem(request):
+    data = json.loads(request.body.decode('utf-8'))
+    result = True
+    message = ""
+    
+    type = ProductType.objects.get(pk = data['product_type']['id'])
+    product = Products.objects.get(pk = data['id'])
+
+    product.product_type = type
+    product.product_name = data['product_name']
+    product.product_price = "{:.2f}".format(float(data['product_price']))
+    product.quantity = int(data['quantity'])
+    product.save()
+    
+    response = JsonResponse({
+        "success": result,
+        "message": message,
+    })
+    
     return response

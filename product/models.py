@@ -18,7 +18,7 @@ class Products(models.Model):
     product_price = models.DecimalField(max_digits=19, decimal_places=3)
     quantity = models.IntegerField(default=10)
     product_photo = models.ImageField(upload_to=product_directory_path, null=True, max_length=300)
-    product_type = models.ForeignKey('ProductType', null=True, on_delete=models.SET_NULL)
+    product_type = models.ForeignKey('ProductType', related_name='product_type', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.product_name

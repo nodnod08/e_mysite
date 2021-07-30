@@ -30,17 +30,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in data.data" :key="i">
-                <td class="align-middle">
-                  <i class="bi bi-pencil-square"></i>
-                  <i @click="showImage(item.product_photo)" class="bi bi-card-image"></i>
-                  <i @click="doDelete(item.id)" class="bi bi-trash"></i>
-                </td>
-                <td class="align-middle">{{ item.product_name }}</td>
-                <td class="align-middle">{{ item.product_price }}</td>
-                <td class="align-middle">{{ item.quantity }}</td>
-                <td class="align-middle">{{ item.product_type ? item.product_type.name : "No Type" }}</td>
-              </tr>
+              <template v-if="Object.keys(data).length">
+                <template v-if="data.data.length">
+                  <tr v-for="(item, i) in data.data" :key="i">
+                    <td class="align-middle">
+                      <i @click="doUpdate(item)" class="bi bi-pencil-square"></i>
+                      <i @click="showImage(item.product_photo)" class="bi bi-card-image"></i>
+                      <i @click="doDelete(item.id)" class="bi bi-trash"></i>
+                    </td>
+                    <td class="align-middle">{{ item.product_name }}</td>
+                    <td class="align-middle">{{ item.product_price }}</td>
+                    <td class="align-middle">{{ item.quantity }}</td>
+                    <td class="align-middle">{{ item.product_type ? item.product_type.name : "No Type" }}</td>
+                  </tr>
+                </template>
+                <template v-else>
+                  <tr>
+                    <td colspan="5">No data</td>
+                  </tr>
+                </template>
+              </template>
             </tbody>
           </table>
         </div>
@@ -103,12 +112,48 @@
           <div class="modal-footer">
             <button type="button" @click="reset" class="btn btn-sm btn-info">Reset</button>
             <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-sm btn-primary">Submit</button>
+            <button type="button" @click="getItems(1)" class="btn btn-sm btn-primary">Submit</button>
           </div>
         </div>
       </div>
     </div>
     <!-- filter end -->
+
+    <!-- edit start -->
+    <div v-if="Object.keys(toUpdate).length" class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update this Item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="text" v-model="toUpdate.product_name" placeholder="Product Name" class="form-control form-control-sm" />
+            </div>
+            <div class="form-group">
+              <input type="number" v-model="toUpdate.product_price" placeholder="Product Name" class="form-control form-control-sm" />
+            </div>
+            <div class="form-group">
+              <input type="number" v-model="toUpdate.quantity" placeholder="Product Name" class="form-control form-control-sm" />
+            </div>
+            <div class="form-group mt-3">
+              <select v-model="toUpdate.product_type.id" class="custom-select custom-select-sm" id="validationCustom04">
+                <option selected disabled value="">Choose Type</option>
+                <option v-for="(type, i) in product_types" :key="i" :value="type.id">{{ type.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" @click="saveItem" class="btn btn-sm btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- edit end -->
   </main>
 </template>
 
@@ -124,7 +169,8 @@ export default {
       item_type: "",
       name: "",
       min_price: "",
-      max_price: ""
+      max_price: "",
+      toUpdate: {}
     };
   },
   created() {
@@ -153,6 +199,15 @@ export default {
       await axios.get("/admin/product/api/get-product-types/").then(res => {
         this.product_types = res.data.result;
       });
+    },
+    doUpdate(item) {
+      this.toUpdate = item;
+      this.$nextTick(() => {
+        $("#editModal").modal("show");
+      });
+    },
+    async saveItem() {
+      await axios.post("/admin/product/api/update-product/", this.toUpdate).then(res => {});
     },
     getItems(p) {
       let page;

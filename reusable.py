@@ -15,7 +15,7 @@ class MyPaginator:
         has_next = action.has_next()
         num_pages = self.paginated.num_pages
 
-        data_from = ((int(page) - 1) * int(self.limit)) + 1
+        data_from = (((int(page) - 1) * int(self.limit)) + 1) if len(result) else 0
         data_to = (((int(page) - 1) * int(self.limit)) + int(self.limit)) if int(page) < int(num_pages) else (((int(page) - 1) * int(self.limit)) + len(result))
 
         data = {

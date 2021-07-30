@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/get-product-types/', views.getProductTypee),
     path('api/get-items-paginate', views.getItemsPaginate),
     path('api/save-product-manually/', views.saveManually),
+    path('api/update-product/', views.updateItem),
     path('api/upload-file-product/', views.saveFile),
 ]
